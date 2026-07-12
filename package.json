@@ -56,7 +56,7 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.453.0",
     "nanoid": "^5.1.5",
-    "next": "15.0.3",
+    "next": "15.0.7",
     "next-auth": "5.0.0-beta.25",
     "pdfkit": "^0.15.1",
     "react": "^18.3.1",
