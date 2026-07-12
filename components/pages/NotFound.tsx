@@ -1,0 +1,48 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { AlertCircle, Home } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+export default function NotFound() {
+  const router = useRouter();
+
+  const handleGoHome = () => {
+    router.push("/dashboard");
+  };
+
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-mesh">
+      <Card className="w-full max-w-lg mx-4 shadow-large glass-panel border-border/60">
+        <CardContent className="pt-8 pb-8 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="absolute inset-0 bg-rose-100 rounded-full animate-pulse" />
+              <AlertCircle className="relative h-16 w-16 text-rose-500" />
+            </div>
+          </div>
+
+          <h1 className="text-4xl font-display font-bold text-foreground mb-2">404</h1>
+
+          <h2 className="text-xl font-display font-semibold text-foreground/80 mb-4">
+            Page Not Found
+          </h2>
+
+          <p className="text-muted-foreground mb-8 leading-relaxed">
+            Sorry, the page you are looking for doesn't exist.
+            <br />
+            It may have been moved or deleted.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button onClick={handleGoHome} size="lg">
+              <Home className="w-4 h-4 mr-2" />
+              Go Home
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
