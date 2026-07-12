@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: transitops
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: transitops-db
+          property: connectionString
+      - key: AUTH_SECRET
+        sync: false
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        sync: false
+      - key: REMINDER_EMAIL_TO
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+
+  # Render has no built-in HTTP cron trigger like Vercel — this runs on a
+  # schedule and just curls the deployed reminder endpoint.
+  - type: cron
+    name: transitops-license-reminders
+    runtime: node
+    plan: starter
+    schedule: "0 6 * * *"
+    buildCommand: echo "no build needed"
+    startCommand: >
+      curl -sf -X GET "$APP_URL/api/cron/license-reminders"
+      -H "Authorization: Bearer $CRON_SECRET"
+    envVars:
+      - key: APP_URL
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+
+databases:
+  - name: transitops-db
+    plan: starter
+    postgresMajorVersion: 16
